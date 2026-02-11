@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>A Private Invitation</title>
+    <style>
+        * { box-sizing: border-box; touch-action: manipulation; }
+        body {
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: radial-gradient(circle, #1a0000 0%, #050505 100%);
+            color: #fff;
+            font-family: 'Garamond', serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .lounge-card {
+            padding: 40px 20px;
+            border-radius: 4px;
+            width: 100%;
+            max-width: 380px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.15); /* Subtle Gold border */
+            box-shadow: 0 20px 60px rgba(0,0,0,0.9);
+            animation: fadeIn 1.5s ease;
+        }
+
+        h1 { 
+            font-size: 1.8rem; 
+            letter-spacing: 5px; 
+            color: #d4af37; /* Champagne Gold */
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .sub-text {
+            font-size: 0.85rem;
+            color: #777;
+            font-style: italic;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+        }
+
+        #msg { 
+            font-size: 1.4rem; 
+            margin-bottom: 40px; 
+            color: #eee;
+            min-height: 40px;
+        }
+
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            position: relative;
+            min-height: 140px;
+        }
+
+        button {
+            width: 220px;
+            padding: 18px;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            border: none;
+            text-transform: uppercase;
+            transition: all 0.6s ease;
+            cursor: pointer;
+        }
+
+        #yesBtn {
+            background-color: #610000; /* Deep Merlot */
+            color: #fff;
+            box-shadow: 0 0 15px rgba(97, 0, 0, 0.3);
+            z-index: 10;
+        }
+
+        #noBtn {
+            background: transparent;
+            color: #333;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .success { display: none; }
+        .success h1 { color: #d4af37; letter-spacing: 2px; }
+        
+        .personal-image {
+            width: 100%;
+            max-width: 280px;
+            border-radius: 2px;
+            margin: 20px 0;
+            border: 1px solid #d4af37;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+            animation: slowReveal 2s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slowReveal { from { opacity: 0; filter: grayscale(100%); } to { opacity: 1; filter: grayscale(0%); } }
+    </style>
+</head>
+<body>
+
+    <div id="ui" class="lounge-card">
+        <h1>An Invitation</h1>
+        <div class="sub-text">Specifically for you.</div>
+        
+        <div id="msg">Be my Valentine?</div>
+        
+        <div class="btn-container">
+            <button id="yesBtn" onclick="celebrate()">I'm yours</button>
+            <button id="noBtn" onmouseover="slip()" ontouchstart="slip()">Not tonight</button>
+        </div>
+    </div>
+
+    <div id="success-screen" class="success lounge-card">
+        <h1>Perfect.</h1>
+        <p style="color: #bbb; font-style: italic;">I was hoping you'd say that.</p>
+        
+        <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcHptdjM0emU0bnVocGh3YTRrMTVvNmRjZWc2c3U0a3BjOGJmbmZpaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/t8xgPfC5oNIRMrNooe/giphy.gif" class="personal-image" alt="Valentine">
+        
+        <p style="color: #7a0000; letter-spacing: 1px; font-size: 0.9rem;">FEBRUARY 14th | My Bed</p>
+    </div>
+
+    <script>
+        let fade = 0;
+
+        function slip() {
+            const no = document.getElementById('noBtn');
+            const msg = document.getElementById('msg');
+            fade++;
+
+            // Button slides away and fades
+            const x = Math.random() * 50 - 25;
+            const y = Math.random() * 30 - 15;
+            
+            no.style.transform = `translate(${x}px, ${y}px)`;
+            no.style.opacity = (1 - (fade * 0.25)).toString();
+
+            if (fade === 1) msg.innerText = "Are you sure?";
+            if (fade === 3) msg.innerText = "Don't be shy...";
+            
+            if (fade >= 4) {
+                no.style.visibility = "hidden";
+                msg.innerText = "There we go.";
+            }
+        }
+
+        function celebrate() {
+            document.getElementById('ui').style.display = 'none';
+            document.getElementById('success-screen').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
